@@ -392,7 +392,7 @@ void FDynamicColormap::RebuildAllLights()
 
 void R_SetDefaultColormap (const char *name)
 {
-	if (strnicmp (fakecmaps[0].name, name, 8) != 0)
+	if (strncasecmp (fakecmaps[0].name, name, 8) != 0)
 	{
 		int i, j;
 		BYTE map[256];
@@ -674,17 +674,17 @@ static bool R_CheckForFixedLights(const BYTE *colormaps)
 
 DWORD R_ColormapNumForName (const char *name)
 {
-	if (strnicmp (name, "COLORMAP", 8))
+	if (strncasecmp (name, "COLORMAP", 8))
 	{	// COLORMAP always returns 0
 		for(int i=fakecmaps.Size()-1; i > 0; i--)
 		{
-			if (!strnicmp(name, fakecmaps[i].name, 8))
+			if (!strncasecmp(name, fakecmaps[i].name, 8))
 			{
 				return i;
 			}
 		}
 				
-		if (!strnicmp (name, "WATERMAP", 8))
+		if (!strncasecmp (name, "WATERMAP", 8))
 			return MAKEARGB (128,0,0x4f,0xa5);
 	}
 	return 0;

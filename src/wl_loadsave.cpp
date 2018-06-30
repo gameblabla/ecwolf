@@ -390,7 +390,7 @@ MENU_LISTENER(PerformSaveGame)
 			file.filename.Format("savegam%u.ecs", i);
 			for(unsigned int j = 0;j < SaveFile::files.Size();j++)
 			{
-				if(stricmp(file.filename, SaveFile::files[j].filename) == 0)
+				if(strcasecmp(file.filename, SaveFile::files[j].filename) == 0)
 				{
 					nextSaveNumber = true;
 					continue;

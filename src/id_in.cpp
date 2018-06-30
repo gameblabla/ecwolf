@@ -452,7 +452,7 @@ IN_Startup(void)
 	IN_GrabMouse();
 
 	// I didn't find a way to ask libSDL whether a mouse is present, yet...
-	MousePresent = true;
+	MousePresent = false;
 
 	IN_Started = true;
 }
@@ -714,7 +714,7 @@ void IN_GrabMouse()
 	if(fullscreen || forcegrabmouse)
 	{
 		GrabInput = true;
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		//SDL_SetRelativeMouseMode(SDL_TRUE);
 	}
 }
 
@@ -725,5 +725,5 @@ bool IN_IsInputGrabbed()
 
 void IN_CenterMouse()
 {
-	SDL_WarpMouseInWindow(NULL, screenWidth / 2, screenHeight / 2);
+	//SDL_WarpMouseInWindow(NULL, screenWidth / 2, screenHeight / 2);
 }

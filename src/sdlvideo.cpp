@@ -18,7 +18,7 @@
 #include <SDL.h>
 
 IVideo *Video = NULL;
-
+uint32_t* memory_game;
 extern float screenGamma;
 
 DFrameBuffer *I_SetMode (int &width, int &height, DFrameBuffer *old)
@@ -315,29 +315,7 @@ extern IVideo *Video;
 #define rgamma 1.f
 #define ggamma 1.f
 #define bgamma 1.f
-#if 0
-CUSTOM_CVAR (Float, rgamma, 1.f, CVAR_ARCHIVE|CVAR_GLOBALCONFIG)
-{
-	if (screen != NULL)
-	{
-		screen->SetGamma (Gamma);
-	}
-}
-CUSTOM_CVAR (Float, ggamma, 1.f, CVAR_ARCHIVE|CVAR_GLOBALCONFIG)
-{
-	if (screen != NULL)
-	{
-		screen->SetGamma (Gamma);
-	}
-}
-CUSTOM_CVAR (Float, bgamma, 1.f, CVAR_ARCHIVE|CVAR_GLOBALCONFIG)
-{
-	if (screen != NULL)
-	{
-		screen->SetGamma (Gamma);
-	}
-}
-#endif
+
 
 // PRIVATE DATA DEFINITIONS ------------------------------------------------
 
@@ -537,21 +515,12 @@ SDLFB::SDLFB (int width, int height, bool fullscreen)
 	NotPaletted = false;
 	FlashAmount = 0;
 	
-	Screen = SDL_SetVideoMode (width, height, vid_displaybits,
-		SDL_HWSURFACE|SDL_HWPALETTE|
-#ifdef SDL_TRIPLEBUF
-        SDL_TRIPLEBUF
-#else
-		SDL_DOUBLEBUF
-#endif
-		|SDL_ANYFORMAT|
-		(fullscreen ? SDL_FULLSCREEN : 0));
-
+	Screen = SDL_SetVideoMode (320, 480, 16, SDL_HWSURFACE);
+	memory_game = (uint32_t*) malloc ((320*240)*2);
 	if (Screen == NULL)
 		return;
 
-	if((Screen->flags & SDL_DOUBLEBUF) != SDL_DOUBLEBUF)
-		usedoublebuffering = false;
+	usedoublebuffering = false;
 
 	for (i = 0; i < 256; i++)
 	{
@@ -608,6 +577,10 @@ void SDLFB::Unlock ()
 
 void SDLFB::Update ()
 {
+    uint32_t y, x;
+    uint32_t *s = (uint32_t*)memory_game;
+    uint32_t *d = (uint32_t*)Screen->pixels;
+
 	if (LockCount != 1)
 	{
 		if (LockCount > 0)
@@ -620,15 +593,6 @@ void SDLFB::Update ()
 
 	DrawRateStuff ();
 
-#if 0
-#ifndef __APPLE__
-	if(vid_maxfps && !cl_capfps)
-	{
-		SEMAPHORE_WAIT(FPSLimitSemaphore)
-	}
-#endif
-#endif
-
 	Buffer = NULL;
 	LockCount = 0;
 	UpdatePending = false;
@@ -640,12 +604,14 @@ void SDLFB::Update ()
 	if (SDL_LockSurface (Screen) == -1)
 		return;
 
-	if (NotPaletted)
-	{
-		GPfx.Convert (MemBuffer, Pitch,
+	/*if (NotPaletted)
+	{*/
+		/*GPfx.Convert (MemBuffer, Pitch,
 			Screen->pixels, Screen->pitch, Width, Height,
-			FRACUNIT, FRACUNIT, 0, 0);
-	}
+			FRACUNIT, FRACUNIT, 0, 0);*/
+
+    //memcpy (Screen->pixels, MemBuffer, Width*Height);
+	/*}
 	else
 	{
 		if (Screen->pitch == Pitch)
@@ -659,17 +625,18 @@ void SDLFB::Update ()
 				memcpy ((BYTE *)Screen->pixels+y*Screen->pitch, MemBuffer+y*Pitch, Width);
 			}
 		}
-	}
-	
-	SDL_UnlockSurface (Screen);
-
-#if 0
-	if (cursorSurface != NULL && GUICapture)
+	}*/
+	GPfx.Convert (MemBuffer, Pitch,
+			memory_game, Screen->pitch, Width, Height,
+			FRACUNIT, FRACUNIT, 0, 0);
+	for(y=0; y<240; y++)
 	{
-		// SDL requires us to draw a surface to get true color cursors.
-		SDL_BlitSurface(cursorSurface, NULL, Screen, &cursorBlit);
+		for(x=0; x<160; x++)
+			*d++ = *s++;
+		d+= 160;
 	}
-#endif
+	//memcpy (Screen->pixels, MemBuffer, Width*Height);
+	SDL_UnlockSurface (Screen);
 
 	//SDLFlipCycles.Clock();
 	SDL_Flip (Screen);

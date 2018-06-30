@@ -63,7 +63,7 @@ HANDLE_PROPERTY(ammogive1)
 HANDLE_PROPERTY(ammotype1)
 {
 	STRING_PARAM(type, 0);
-	if(stricmp(type, "none") == 0 || *type == '\0')
+	if(strcasecmp(type, "none") == 0 || *type == '\0')
 		((AWeapon *)defaults)->ammotype[AWeapon::PrimaryFire] = NULL;
 	else
 		((AWeapon *)defaults)->ammotype[AWeapon::PrimaryFire] = ClassDef::FindClassTentative(type, NATIVE_CLASS(Ammo));
@@ -84,7 +84,7 @@ HANDLE_PROPERTY(ammogive2)
 HANDLE_PROPERTY(ammotype2)
 {
 	STRING_PARAM(type, 0);
-	if(stricmp(type, "none") == 0 || *type == '\0')
+	if(strcasecmp(type, "none") == 0 || *type == '\0')
 		((AWeapon *)defaults)->ammotype[AWeapon::AltFire] = NULL;
 	else
 		((AWeapon *)defaults)->ammotype[AWeapon::AltFire] = ClassDef::FindClassTentative(type, NATIVE_CLASS(Ammo));
@@ -149,19 +149,19 @@ HANDLE_PROPERTY(bobstyle)
 	STRING_PARAM(style, 0);
 
 	AWeapon::EBobStyle &BobStyle = ((AWeapon*)defaults)->BobStyle;
-	if(stricmp(style, "Normal") == 0)
+	if(strcasecmp(style, "Normal") == 0)
 		BobStyle = AWeapon::BobNormal;
-	else if(stricmp(style, "Inverse") == 0)
+	else if(strcasecmp(style, "Inverse") == 0)
 		BobStyle = AWeapon::BobInverse;
-	else if(stricmp(style, "Alpha") == 0)
+	else if(strcasecmp(style, "Alpha") == 0)
 		BobStyle = AWeapon::BobAlpha;
-	else if(stricmp(style, "InverseAlpha") == 0)
+	else if(strcasecmp(style, "InverseAlpha") == 0)
 		BobStyle = AWeapon::BobInverseAlpha;
-	else if(stricmp(style, "Smooth") == 0)
+	else if(strcasecmp(style, "Smooth") == 0)
 		BobStyle = AWeapon::BobSmooth;
-	else if(stricmp(style, "InverseSmooth") == 0)
+	else if(strcasecmp(style, "InverseSmooth") == 0)
 		BobStyle = AWeapon::BobInverseSmooth;
-	else if(stricmp(style, "Thrust") == 0)
+	else if(strcasecmp(style, "Thrust") == 0)
 		BobStyle = AWeapon::BobThrust;
 	else
 		I_Error("Invalid bob style '%s'.", style);

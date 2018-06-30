@@ -266,8 +266,8 @@ public:
 	int Compare (const FString &other) const { return strcmp (Chars, other.Chars); }
 	int Compare (const char *other) const { return strcmp (Chars, other); }
 
-	int CompareNoCase (const FString &other) const { return stricmp (Chars, other.Chars); }
-	int CompareNoCase (const char *other) const { return stricmp (Chars, other); }
+	int CompareNoCase (const FString &other) const { return strcasecmp (Chars, other.Chars); }
+	int CompareNoCase (const char *other) const { return strcasecmp (Chars, other); }
 
 protected:
 	const FStringData *Data() const { return (FStringData *)Chars - 1; }

@@ -45,10 +45,10 @@
 
 bool queryiwad = true;
 
+extern char GameFolder[256];
+
 int I_PickIWad(WadStuff *wads, int numwads, bool showwin, int defaultiwad);
-#ifndef _WIN32
-#include "wl_iwad_picker.cpp"
-#endif
+#include "wl_iwad_picker.h"
 
 namespace IWad {
 
@@ -94,7 +94,7 @@ static int CheckData(WadStuff &wad)
 					for(unsigned int l = iwadTypes[k].Ident.Size();l-- > 0;)
 					{
 						if(iwadTypes[k].Ident[l].CompareNoCase(lump->Name) == 0 ||
-							(lump->FullName && (strnicmp(lump->FullName, "maps/", 5) == 0 &&
+							(lump->FullName && (strncasecmp(lump->FullName, "maps/", 5) == 0 &&
 							iwadTypes[k].Ident[l].CompareNoCase(FString(lump->FullName+5, strcspn(lump->FullName+5, "."))))))
 						{
 							valid[k] |= 1<<l;
@@ -415,7 +415,7 @@ static void ParseIWadInfo(FResourceFile *res)
 	{
 		FResourceLump *lump = res->GetLump(i);
 
-		if(lump->Namespace == ns_global && stricmp(lump->Name, "IWADINFO") == 0)
+		if(lump->Namespace == ns_global && strcasecmp(lump->Name, "IWADINFO") == 0)
 		{
 			Scanner sc((const char*)lump->CacheLump(), lump->LumpSize);
 			sc.SetScriptIdentifier(lump->FullName);
@@ -506,8 +506,8 @@ void SelectGame(TArray<FString> &wadfiles, const char* iwad, const char* datawad
 	}
 	while(split != 0);
 
-	LookForGameData(datawadRes, basefiles, "/usr/local/share/games/wolf3d");
-
+	//LookForGameData(datawadRes, basefiles, "/usr/local/share/games/wolf3d");
+	LookForGameData(datawadRes, basefiles, GameFolder);
 	// Look for a steam install. (Basically from ZDoom)
 	{
 		static const struct

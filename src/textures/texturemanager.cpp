@@ -171,7 +171,7 @@ FTextureID FTextureManager::CheckForTexture (const char *name, int usetype, BITF
 	{
 		const FTexture *tex = Textures[i].Texture;
 
-		if (stricmp (tex->Name, name) == 0)
+		if (strcasecmp (tex->Name, name) == 0)
 		{
 			// The name matches, so check the texture type
 			if (usetype == FTexture::TEX_Any)
@@ -274,7 +274,7 @@ int FTextureManager::ListTextures (const char *name, TArray<FTextureID> &list)
 	{
 		const FTexture *tex = Textures[i].Texture;
 
-		if (stricmp (tex->Name, name) == 0)
+		if (strcasecmp (tex->Name, name) == 0)
 		{
 			// NULL textures must be ignored.
 			if (tex->UseType!=FTexture::TEX_Null) 

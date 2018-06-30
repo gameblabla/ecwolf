@@ -1,7 +1,7 @@
 #ifndef _VERSION_H_
 #define _VERSION_H_
 
-#include "svnrevision.h"
+#define SVN_REVISION_STRING ""
 
 #define GAMENAME "ECWolf"
 #define GAMESIG "ECWOLF"

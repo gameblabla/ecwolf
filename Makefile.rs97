@@ -1,0 +1,44 @@
+PRGNAME     = ecwolf
+
+# define regarding OS, which compiler to use
+CHAINPREFIX=/opt/rs97-toolchain
+CROSS_COMPILE=$(CHAINPREFIX)/usr/bin/mipsel-linux-
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+LD = $(CROSS_COMPILE)gcc
+SYSROOT     := $(CHAINPREFIX)/usr/mipsel-buildroot-linux-uclibc/sysroot
+SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
+SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
+
+
+# change compilation / linking flag options
+CFLAGS		= -DNO_GTK -DUSE_GPL
+CFLAGS		+= -O2 -fdata-sections -ffunction-sections  -mips32 -mno-mips16 -mno-interlink-mips16 -mno-shared -mno-xgot -march=mips32 -mtune=mips32 -fdata-sections -ffunction-sections -mhard-float $(F_OPTS) $(SDL_CFLAGS) -Isrc/resourcefiles
+CFLAGS      += -I./bzip2 -I./gdtoa -I./src/g_shared -I./jpeg-6b -I./src -I./src/dosbox -I./src/g_blake -I./src/g_shareds -I./src/g_wolf -I./lzma/C -I./src/r_2d -I./src/r_data -I./src/textures -I./src/sfmt -I./src/thingdef
+CFLAGS 		+= -mlong32 -G0 -mlocal-sdata -mno-embedded-data -mno-check-zero-division -mno-fp-exceptions -mno-xgot
+CXXFLAGS	= $(CFLAGS) -fno-rtti -fno-math-errno -fno-threadsafe-statics
+LDFLAGS     = $(SDL_LIBS) -lSDL_mixer -lm -lz -lstdc++  -Wl,--as-needed -Wl,--gc-sections -flto  -s
+
+# Files to be compiled
+SRCDIR  	= ./bzip2 ./src ./src/resourcefiles ./src/dosbox ./src/g_blake ./src/g_shared ./jpeg-6b
+SRCDIR   	+= ./src/g_shareds ./src/g_wolf ./src/r_2d ./src/r_data ./src/textures ./src/sfmt ./src/thingdef ./lzma/C
+SRCDIR    	+= ./textscreen  ./gdtoa
+VPATH     	= $(SRCDIR)
+SRC_C   	= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.c))
+SRC_CP   	= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.cpp))
+OBJ_C   	= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
+OBJ_CP   	= $(notdir $(patsubst %.cpp, %.o, $(SRC_CP)))
+OBJS     	= $(OBJ_C) $(OBJ_CP)
+
+# Rules to make executable
+$(PRGNAME): $(OBJS)  
+	$(LD) $(CFLAGS) -o $(PRGNAME) $^ $(LDFLAGS)
+
+$(OBJ_C) : %.o : %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJ_CP) : %.o : %.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(PRGNAME) *.o

@@ -230,7 +230,7 @@ THIS SOFTWARE.
 #define ldus_QNAN4 0x0
 #endif
 #else
-#include "gd_qnan.h"
+//#include "gd_qnan.h"
 #endif
 
 #ifdef Honor_FLT_ROUNDS
@@ -294,6 +294,8 @@ extern Char *MALLOC ANSI((size_t));
 #define n_bigtens 2
 #endif
 
+#define n_bigtens 2
+
 #ifndef LONG_MAX
 #define LONG_MAX 2147483647
 #endif
@@ -324,7 +326,7 @@ extern "C" {
 #endif
 
 #if defined(IEEE_8087) + defined(IEEE_MC68k) + defined(VAX) + defined(IBM) != 1
-Exactly one of IEEE_8087, IEEE_MC68k, VAX, or IBM should be defined.
+//Exactly one of IEEE_8087, IEEE_MC68k, VAX, or IBM should be defined.
 #endif
 
 typedef union { double d; ULong L[2]; } U;

@@ -84,7 +84,7 @@ LineSpecials Specials::LookupFunctionNum(const char* const function)
 	const LineSpecialMeta *func = lnspecMeta;
 	do
 	{
-		if(stricmp(func->name, function) == 0)
+		if(strcasecmp(func->name, function) == 0)
 			return static_cast<LineSpecials> (func->num);
 	}
 	while((++func)->name != NULL);

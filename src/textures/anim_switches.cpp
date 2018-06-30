@@ -76,7 +76,7 @@ void FTextureManager::InitSwitchList ()
 		for (list_p = alphSwitchList; list_p[18] || list_p[19]; list_p += 20)
 		{
 			// [RH] Check for switches that aren't really switches
-			if (stricmp (list_p, list_p+9) == 0)
+			if (strcasecmp (list_p, list_p+9) == 0)
 			{
 				Printf ("Switch %s in SWITCHES has the same 'on' state\n", list_p);
 				continue;

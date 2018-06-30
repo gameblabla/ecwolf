@@ -110,7 +110,7 @@ int FName::NameManager::FindName (const char *text, bool noCreate)
 	// See if the name already exists.
 	while (scanner >= 0)
 	{
-		if (NameArray[scanner].Hash == hash && stricmp (NameArray[scanner].Text, text) == 0)
+		if (NameArray[scanner].Hash == hash && strcasecmp (NameArray[scanner].Text, text) == 0)
 		{
 			return scanner;
 		}
@@ -153,7 +153,7 @@ int FName::NameManager::FindName (const char *text, size_t textLen, bool noCreat
 	while (scanner >= 0)
 	{
 		if (NameArray[scanner].Hash == hash &&
-			strnicmp (NameArray[scanner].Text, text, textLen) == 0 &&
+			strncasecmp (NameArray[scanner].Text, text, textLen) == 0 &&
 			NameArray[scanner].Text[textLen] == '\0')
 		{
 			return scanner;

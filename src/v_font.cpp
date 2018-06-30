@@ -525,7 +525,7 @@ FFont *FFont::FindFont (const char *name)
 
 	while (font != NULL)
 	{
-		if (stricmp (font->Name, name) == 0)
+		if (strcasecmp (font->Name, name) == 0)
 			break;
 		font = font->Next;
 	}

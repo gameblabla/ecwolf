@@ -114,7 +114,7 @@ class FAudiot : public FUncompressedFile
 					bool isMusic = false;
 					for(unsigned int j = 0;j+3 < 64;j++)
 					{
-						if(strnicmp(&data[j], "IMF", 3) == 0)
+						if(strncasecmp(&data[j], "IMF", 3) == 0)
 						{
 							isMusic = true;
 							break;

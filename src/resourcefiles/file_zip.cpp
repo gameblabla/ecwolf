@@ -150,7 +150,7 @@ int STACK_ARGS FZipFile::lumpcmp(const void * a, const void * b)
 	FZipLump * rec1 = (FZipLump *)a;
 	FZipLump * rec2 = (FZipLump *)b;
 
-	return stricmp(rec1->FullName, rec2->FullName);
+	return strcasecmp(rec1->FullName, rec2->FullName);
 }
 
 

@@ -166,7 +166,7 @@ void StateLabel::Parse(Scanner &sc, const ClassDef *parent, bool noRelative)
 				if(cls == NULL)
 					sc.ScriptMessage(Scanner::ERROR, "%s is not a super class.", label.GetChars());
 			}
-			while(stricmp(cls->GetName().GetChars(), label.GetChars()) != 0);
+			while(strcasecmp(cls->GetName().GetChars(), label.GetChars()) != 0);
 		}
 
 		sc.MustGetToken(TK_Identifier);
@@ -1129,7 +1129,7 @@ void ClassDef::ParseActor(Scanner &sc)
 
 								thisState.duration = static_cast<int> (sc->decimal*2);
 							}
-							else if(stricmp(thisState.sprite, "goto") == 0)
+							else if(strcasecmp(thisState.sprite, "goto") == 0)
 							{
 								thisState.nextType = StateDefinition::GOTO;
 								thisState.nextArg = thisState.frames;
@@ -1627,11 +1627,11 @@ bool ClassDef::SetProperty(ClassDef *newClass, const char* className, const char
 	while(min <= max)
 	{
 		int mid = (min+max)/2;
-		int ret = stricmp(properties[mid].name, propName);
+		int ret = strcasecmp(properties[mid].name, propName);
 		if(ret == 0)
 		{
 			if(!newClass->IsDescendantOf(properties[mid].className) ||
-				stricmp(properties[mid].prefix, className) != 0)
+				strcasecmp(properties[mid].prefix, className) != 0)
 				sc.ScriptMessage(Scanner::ERROR, "Property %s.%s not available in this scope.\n", properties[mid].className->name.GetChars(), propName);
 
 			PropertyParam* params = new PropertyParam[strlen(properties[mid].params)];

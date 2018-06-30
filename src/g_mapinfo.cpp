@@ -314,7 +314,7 @@ LevelInfo &LevelInfo::Find(const char* level)
 {
 	for(unsigned int i = 0;i < levelInfos.Size();++i)
 	{
-		if(stricmp(levelInfos[i].MapName, level) == 0)
+		if(strcasecmp(levelInfos[i].MapName, level) == 0)
 			return levelInfos[i];
 	}
 	return defaultMap;
@@ -350,7 +350,7 @@ protected:
 		strncpy(mapInfo.MapName, sc->str, 8);
 		mapInfo.MapName[8] = 0;
 
-		if(strnicmp(mapInfo.MapName, "MAP", 3) == 0)
+		if(strncasecmp(mapInfo.MapName, "MAP", 3) == 0)
 		{
 			int num = atoi(mapInfo.MapName+3);
 			if(num > 0) // Zero is the default so no need to do anything.

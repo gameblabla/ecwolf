@@ -48,6 +48,8 @@
 
 #include <clocale>
 
+char GameFolder[256];
+
 /*
 =============================================================================
 
@@ -908,7 +910,8 @@ int CheckRatio (int width, int height)//, int *trueratio)
 
 static const char* CheckParameters(int argc, char *argv[], TArray<FString> &files)
 {
-	const char* extension = NULL;
+	return NULL;
+	/*const char* extension = NULL;
 	bool hasError = false, showHelp = false;
 	bool sampleRateGiven = false, audioBufferGiven = false;
 	int defaultSampleRate = param_samplerate;
@@ -1134,7 +1137,7 @@ static const char* CheckParameters(int argc, char *argv[], TArray<FString> &file
 	if(sampleRateGiven && !audioBufferGiven)
 		param_audiobuffer = 2048 / (44100 / param_samplerate);
 
-	return extension;
+	return extension;*/
 }
 
 #ifndef _WIN32
@@ -1210,6 +1213,7 @@ void CallTerminateFunctions()
 		TermFuncs[--NumTerms]();
 }
 
+
 #ifndef NO_GTK
 #include <gtk/gtk.h>
 bool GtkAvailable;
@@ -1233,6 +1237,11 @@ int main (int argc, char *argv[])
 #ifndef NO_GTK
 	GtkAvailable = gtk_init_check(&argc, &argv);
 #endif
+
+	if (argc > 1)
+	{	
+		snprintf(GameFolder, sizeof(GameFolder), "%s", argv[1]);
+	}
 
 #ifdef _WIN32
 	StartupWin32();

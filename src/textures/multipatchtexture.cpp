@@ -946,7 +946,7 @@ void FTextureManager::AddTexturesLump (const void *lumpdata, int lumpsize, int d
 		int j;
 		for (j = (int)Textures.Size() - 1; j >= firstdup; --j)
 		{
-			if (strnicmp (Textures[j].Texture->Name, (const char *)maptex + offset, 8) == 0)
+			if (strncasecmp (Textures[j].Texture->Name, (const char *)maptex + offset, 8) == 0)
 				break;
 		}
 		if (j + 1 == firstdup)

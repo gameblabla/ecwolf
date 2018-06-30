@@ -96,7 +96,7 @@ GameMap::GameMap(const FString &map) : map(map), valid(false), isUWMF(false),
 
 		// First lump is assumed marker
 		FResourceLump *lump = file->GetLump(1);
-		if(stricmp(lump->Name, "PLANES") == 0)
+		if(strcasecmp(lump->Name, "PLANES") == 0)
 		{
 			numLumps = 1;
 			isUWMF = false;
@@ -105,7 +105,7 @@ GameMap::GameMap(const FString &map) : map(map), valid(false), isUWMF(false),
 		}
 		else
 		{
-			if(stricmp(lump->Name, "TEXTMAP") != 0)
+			if(strcasecmp(lump->Name, "TEXTMAP") != 0)
 			{
 				FString error;
 				error.Format("Invalid map format for %s!", map.GetChars());
@@ -118,7 +118,7 @@ GameMap::GameMap(const FString &map) : map(map), valid(false), isUWMF(false),
 			for(unsigned int i = 2;i < file->LumpCount();++i)
 			{
 				lump = file->GetLump(i);
-				if(stricmp(lump->Name, "ENDMAP") == 0)
+				if(strcasecmp(lump->Name, "ENDMAP") == 0)
 				{
 					valid = true;
 					break;

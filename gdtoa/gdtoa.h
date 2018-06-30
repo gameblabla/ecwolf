@@ -64,7 +64,7 @@ THIS SOFTWARE.
 #define Double_Align
 #endif
 #else
-#include "arith.h"
+//#include "arith.h"
 #endif
 #include <stddef.h> /* for size_t */
 

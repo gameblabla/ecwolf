@@ -470,7 +470,7 @@ void ControlMenuItem::draw()
 		PrintX = 162;
 		US_Print(BigFont, keyNames[button.keyboard], getTextColor());
 	}
-	if(button.mouse != -1)
+	/*if(button.mouse != -1)
 	{
 		PrintX = 214;
 		char btn[8];
@@ -486,21 +486,21 @@ void ControlMenuItem::draw()
 		else
 			sprintf(btn, "A%d%c", (button.joystick-32)/2, (button.joystick&1) ? 'D' : 'U');
 		US_Print(BigFont, btn, getTextColor());
-	}
+	}*/
 
 	PrintX = menu->getX() + menu->getIndent();
 }
 
 void ControlMenuItem::left()
 {
-	if(column != 0)
-		column--;
+	/*if(column != 0)
+		column--;*/
 }
 
 void ControlMenuItem::right()
 {
-	if(column != 2)
-		column++;
+	/*if(column != 2)
+		column++;*/
 }
 
 void Menu::drawGunHalfStep(int x, int y)
@@ -691,9 +691,9 @@ void Menu::draw() const
 		PrintX = 168;
 		US_Print(BigFont, "Key", gameinfo.FontColors[GameInfo::MENU_TITLE]);
 		PrintX = 220;
-		US_Print(BigFont, "Mse", gameinfo.FontColors[GameInfo::MENU_TITLE]);
+		/*US_Print(BigFont, "Mse", gameinfo.FontColors[GameInfo::MENU_TITLE]);
 		PrintX = 272;
-		US_Print(BigFont, "Joy", gameinfo.FontColors[GameInfo::MENU_TITLE]);
+		US_Print(BigFont, "Joy", gameinfo.FontColors[GameInfo::MENU_TITLE]);*/
 	}
 	else
 	{

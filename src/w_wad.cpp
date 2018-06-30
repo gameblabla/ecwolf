@@ -439,7 +439,7 @@ int FWadCollection::CheckIfWadLoaded (const char *name)
 	{
 		for (i = 0; i < Files.Size(); ++i)
 		{
-			if (stricmp (GetWadFullName (i), name) == 0)
+			if (strcasecmp (GetWadFullName (i), name) == 0)
 			{
 				return i;
 			}
@@ -449,7 +449,7 @@ int FWadCollection::CheckIfWadLoaded (const char *name)
 	{
 		for (i = 0; i < Files.Size(); ++i)
 		{
-			if (stricmp (GetWadName (i), name) == 0)
+			if (strcasecmp (GetWadName (i), name) == 0)
 			{
 				return i;
 			}
@@ -610,7 +610,7 @@ int FWadCollection::CheckNumForFullName (const char *name, bool trynormal, int n
 
 	i = FirstLumpIndex_FullName[MakeKey (name) % NumLumps];
 
-	while (i != NULL_INDEX && stricmp(name, LumpInfo[i].lump->FullName))
+	while (i != NULL_INDEX && strcasecmp(name, LumpInfo[i].lump->FullName))
 	{
 		i = NextLumpIndex_FullName[i];
 	}
@@ -636,7 +636,7 @@ int FWadCollection::CheckNumForFullName (const char *name, int wadnum)
 	i = FirstLumpIndex_FullName[MakeKey (name) % NumLumps];
 
 	while (i != NULL_INDEX && 
-		(stricmp(name, LumpInfo[i].lump->FullName) || LumpInfo[i].wadnum != wadnum))
+		(strcasecmp(name, LumpInfo[i].lump->FullName) || LumpInfo[i].wadnum != wadnum))
 	{
 		i = NextLumpIndex_FullName[i];
 	}
@@ -858,7 +858,7 @@ int FWadCollection::FindLumpMulti (const char **names, int *lastlump, bool anyns
 			
 			for(const char **name = names; *name != NULL; name++)
 			{
-				if (!strnicmp(*name, lump->Name, 8))
+				if (!strncasecmp(*name, lump->Name, 8))
 				{
 					int lump = int(lump_p - &LumpInfo[0]);
 					*lastlump = lump + 1;
@@ -885,7 +885,7 @@ bool FWadCollection::CheckLumpName (int lump, const char *name)
 	if ((size_t)lump >= NumLumps)
 		return false;
 
-	return !strnicmp (LumpInfo[lump].lump->Name, name, 8);
+	return !strncasecmp (LumpInfo[lump].lump->Name, name, 8);
 }
 
 //==========================================================================

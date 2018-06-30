@@ -528,7 +528,7 @@ static void Convert16 (BYTE *src, int srcpitch,
 			src += srcpitch;
 		}
 	}
-	else
+	/*else
 	{
 		for (y = destheight; y != 0; y--)
 		{
@@ -566,7 +566,7 @@ static void Convert16 (BYTE *src, int srcpitch,
 			}
 			dest += destpitch;
 		}
-	}
+	}*/
 }
 
 static void Convert24 (BYTE *src, int srcpitch,

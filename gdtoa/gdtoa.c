@@ -284,7 +284,7 @@ gdtoa
 		mode -= 4;
 		try_quick = 0;
 		}
-	else if (i >= -4 - Emin || i < Emin)
+	else if (i >= -4 - 1 || i < 1)
 		try_quick = 0;
 	leftright = 1;
 	ilim = ilim1 = -1;	/* Values for cases 0 and 1; done here to */
@@ -347,7 +347,7 @@ gdtoa
 			if (j & Bletch) {
 				/* prevent overflows */
 				j &= Bletch - 1;
-				dval(&d) /= bigtens[n_bigtens-1];
+				dval(&d) /= bigtens[2-1];
 				ieps++;
 				}
 			for(; j; j >>= 1, i++)

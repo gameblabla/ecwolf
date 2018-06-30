@@ -346,7 +346,7 @@ dtoa
 			if (j & Bletch) {
 				/* prevent overflows */
 				j &= Bletch - 1;
-				dval(&d) /= bigtens[n_bigtens-1];
+				dval(&d) /= bigtens[2-1];
 				ieps++;
 				}
 			for(; j; j >>= 1, i++)

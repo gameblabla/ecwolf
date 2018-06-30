@@ -41,9 +41,6 @@
 #define stat _stat
 #else
 #include <dirent.h>
-#ifndef __sun
-#include <fts.h>
-#endif
 #endif
 #include <stdio.h>
 #include <string.h>
@@ -134,7 +131,7 @@ int STACK_ARGS FDirectory::lumpcmp(const void * a, const void * b)
 	FDirectoryLump * rec1 = (FDirectoryLump *)a;
 	FDirectoryLump * rec2 = (FDirectoryLump *)b;
 
-	return stricmp(rec1->FullName, rec2->FullName);
+	return strcasecmp(rec1->FullName, rec2->FullName);
 }
 
 #ifdef _WIN32
@@ -199,7 +196,7 @@ int FDirectory::AddDirectory(const char *dirpath)
 	return count;
 }
 
-#elif defined(__sun)
+#else
 
 int FDirectory::AddDirectory(const char *dirpath)
 {
@@ -239,54 +236,6 @@ int FDirectory::AddDirectory(const char *dirpath)
 	return count;
 }
 
-#else
-
-//==========================================================================
-//
-// add_dirs
-// 4.4BSD version
-//
-//==========================================================================
-
-int FDirectory::AddDirectory(const char *dirpath)
-{
-	char *argv [2] = { NULL, NULL };
-	argv[0] = new char[strlen(dirpath)+1];
-	strcpy(argv[0], dirpath);
-	FTS *fts;
-	FTSENT *ent;
-	int count = 0;
-
-	fts = fts_open(argv, FTS_LOGICAL, NULL);
-	if (fts == NULL)
-	{
-		Printf("Failed to start directory traversal: %s\n", strerror(errno));
-		return 0;
-	}
-	while ((ent = fts_read(fts)) != NULL)
-	{
-		if (ent->fts_info == FTS_D && ent->fts_name[0] == '.')
-		{
-			// Skip hidden directories. (Prevents SVN bookkeeping
-			// info from being included.)
-			fts_set(fts, ent, FTS_SKIP);
-		}
-		if (ent->fts_info == FTS_D && ent->fts_level == 0)
-		{
-			continue;
-		}
-		if (ent->fts_info != FTS_F)
-		{
-			// We're only interested in remembering files.
-			continue;
-		}
-		AddEntry(ent->fts_path, ent->fts_statp->st_size);
-		count++;
-	}
-	fts_close(fts);
-	delete[] argv[0];
-	return count;
-}
 #endif
 
 
