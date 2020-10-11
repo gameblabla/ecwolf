@@ -47,9 +47,11 @@
 bool queryiwad = true;
 static bool showpreviewgames = false;
 
+extern char GameFolder[256];
+
 int I_PickIWad(WadStuff *wads, int numwads, bool showwin, int defaultiwad);
 #ifndef _WIN32
-#include "wl_iwad_picker.cpp"
+#include "wl_iwad_picker_s.h"
 #endif
 
 namespace IWad {
@@ -657,8 +659,12 @@ void SelectGame(TArray<FString> &wadfiles, const char* iwad, const char* datawad
 	while(split != 0);
 
 #if !defined(__APPLE__) && !defined(_WIN32)
+	#ifdef GCW0
+	LookForGameData(datawadRes, basefiles, GameFolder);
+	#else
 	LookForGameData(datawadRes, basefiles, "/usr/share/games/wolf3d");
 	LookForGameData(datawadRes, basefiles, "/usr/local/share/games/wolf3d");
+	#endif
 #endif
 
 	// Look for a steam install. (Basically from ZDoom)

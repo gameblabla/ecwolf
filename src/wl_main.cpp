@@ -49,6 +49,8 @@
 
 #include <clocale>
 
+char GameFolder[256];
+
 /*
 =============================================================================
 
@@ -1359,6 +1361,11 @@ int main(int argc, char *argv[])
 #ifndef NO_GTK
 	GtkAvailable = gtk_init_check(&argc, &argv);
 #endif
+
+	if (argc > 1)
+	{	
+		snprintf(GameFolder, sizeof(GameFolder), "%s", argv[1]);
+	}
 
 	return WL_Main(argc, argv);
 }

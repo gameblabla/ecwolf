@@ -119,6 +119,7 @@ struct NetClient
 	unsigned short extrapos;
 };
 
+#ifndef NONET
 static NetClient Client[MAXPLAYERS];
 static UDPsocket Socket;
 static UDPpacket *Packet;
@@ -355,9 +356,12 @@ static void Shutdown()
 	SDLNet_UDP_Close(Socket);
 }
 
+#endif
+
 // Returns true when network init finished
 void Init(InitStatusCallback callback)
 {
+#ifndef NONET
 	if(InitVars.mode == MODE_SinglePlayer)
 		return;
 
@@ -373,10 +377,12 @@ void Init(InitStatusCallback callback)
 		StartHost(callback);
 	else
 		StartJoin(callback);
+#endif
 }
 
 void PollControls()
 {
+#ifndef NONET
 	bool acked[MAXPLAYERS] = { false };
 	bool controls[MAXPLAYERS] = { false };
 	unsigned int numAcked = 1;
@@ -493,6 +499,7 @@ void PollControls()
 			}
 		}
 	}
+#endif
 }
 
 }

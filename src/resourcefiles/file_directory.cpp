@@ -42,7 +42,7 @@
 #else
 #include <dirent.h>
 #ifndef __sun
-#include <fts.h>
+//#include <fts.h>
 #endif
 #endif
 #include <stdio.h>
@@ -114,7 +114,9 @@ FDirectory::FDirectory(const char * directory)
 	dirname = directory;
 	dirname.ReplaceChars('\\', '/');
 	if (dirname[dirname.Len()-1] != '/') dirname += '/';
+	#ifndef GCW0
 	free((void*)directory);
+	#endif
 	char* cFilename = new char[strlen(dirname) + 1];
 	memcpy(cFilename, dirname, strlen(dirname)+1);
 	Filename = cFilename;
@@ -183,8 +185,8 @@ int FDirectory::AddDirectory(const char *dirpath)
 	return count;
 }
 
-#elif defined(__sun)
-
+//#elif defined(__sun)
+#else
 int FDirectory::AddDirectory(const char *dirpath)
 {
 	int count = 0;
@@ -222,7 +224,7 @@ int FDirectory::AddDirectory(const char *dirpath)
 	}
 	return count;
 }
-
+/*
 #else
 
 //==========================================================================
@@ -270,7 +272,7 @@ int FDirectory::AddDirectory(const char *dirpath)
 	fts_close(fts);
 	delete[] argv[0];
 	return count;
-}
+}*/
 #endif
 
 

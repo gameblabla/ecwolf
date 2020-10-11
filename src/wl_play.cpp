@@ -94,13 +94,13 @@ ControlScheme controlScheme[] =
 	{ bt_slot8,				"Slot 8",		-1,			sc_8,			-1, CS_AxisDigital, 0 },
 	{ bt_slot9,				"Slot 9",		-1,			sc_9,			-1, CS_AxisDigital, 0 },
 	{ bt_slot0,				"Slot 0",		-1,			sc_0,			-1, CS_AxisDigital, 0 },
-	{ bt_nextweapon,		"Next Weapon",	4,			-1,				-1, CS_AxisDigital, 0 },
-	{ bt_prevweapon,		"Prev Weapon",	5, 			-1,				-1, CS_AxisDigital, 0 },
+	{ bt_nextweapon,		"Next Weapon",	4,			sc_BackSpace,	-1, CS_AxisDigital, 0 },
+	{ bt_prevweapon,		"Prev Weapon",	5, 			sc_Tab,			-1, CS_AxisDigital, 0 },
 	{ bt_altattack,			"Alt Attack",	-1,			-1,				-1, CS_AxisDigital, 0 },
 	{ bt_reload,			"Reload",		-1,			-1,				-1, CS_AxisDigital, 0 },
 	{ bt_zoom,				"Zoom",			-1,			-1,				-1, CS_AxisDigital, 0 },
-	{ bt_automap,			"Automap",		-1,			-1,				-1, CS_AxisDigital, 0 },
-	{ bt_showstatusbar,		"Show Status",	-1,			sc_Tab,			-1,	CS_AxisDigital, 0 },
+	{ bt_automap,			"Automap",		-1,			sc_Escape,		-1, CS_AxisDigital, 0 },
+	{ bt_showstatusbar,		"Show Status",	-1,			-1,				-1,	CS_AxisDigital, 0 },
 
 	// End of List
 	{ bt_nobutton,			NULL, -1, -1, -1, CS_AxisDigital, 0 }
@@ -792,7 +792,7 @@ void CheckKeys (void)
 		return;
 	}
 
-	if ((scan >= sc_F1 && scan <= sc_F9) || scan == sc_Escape || control[ConsolePlayer].buttonstate[bt_esc])
+	if ((scan >= sc_F1 && scan <= sc_F9) || scan == sc_Enter || control[ConsolePlayer].buttonstate[bt_esc])
 	{
 		int lastoffs = StopMusic ();
 		SD_StopDigitized();

@@ -1,0 +1,4 @@
+#!/bin/sh
+SOURCE="$1"
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+./ecwolf "$DIR"

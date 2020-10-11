@@ -712,7 +712,7 @@ SDLFB::SDLFB (int width, int height, bool fullscreen)
 	}
 
 	Screen = SDL_SetVideoMode (width, height, vid_displaybits,
-		SDL_HWSURFACE|SDL_HWPALETTE|SDL_DOUBLEBUF|SDL_ANYFORMAT|
+		SDL_HWSURFACE|SDL_HWPALETTE|SDL_TRIPLEBUF|SDL_ANYFORMAT|
 		(fullscreen ? SDL_FULLSCREEN : 0));
 
 	if (Screen == NULL)
